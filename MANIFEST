@@ -5,6 +5,7 @@ Float32.pm
 Float32.pod
 Float32.xs
 t/inf.t
+t/mpfr_checks.t
 t/new.t
 t/next.t
 t/overload_arith.t
