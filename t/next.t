@@ -27,11 +27,11 @@ flt_nextabove($pinf);
 cmp_ok( (is_flt_inf($pinf)), '==', 1, "next above 3.402823466e+38 is inf");
 
 my $pmin = $Math::Float32::flt_DENORM_MIN;
-cmp_ok($pmin, '==', '1.401298464e-45', "+min is 1.401298464e-45");
+cmp_ok($pmin, '==', '1.401298464e-45', "DENORM_MIN is 1.401298464e-45");
 
 flt_nextbelow($pmin);
-cmp_ok($pmin, '==', 0, "next below +min is zero");
-cmp_ok( (is_flt_zero($pmin)), '==', 1, "next below +min is unsigned zero");
+cmp_ok($pmin, '==', 0, "next below DENORM_MIN is zero");
+cmp_ok( (is_flt_zero($pmin)), '==', 1, "next below DENORM_MIN is unsigned zero");
 
 flt_nextabove($pmin);
 cmp_ok($pmin, '==', $Math::Float32::flt_DENORM_MIN, "next above zero is DENORM_MIN");
@@ -44,13 +44,13 @@ cmp_ok( (is_flt_inf($ninf)), '==', 0, "next above -inf is not inf");
 cmp_ok( $ninf, '==', -$Math::Float32::flt_NORM_MAX , "next above -inf is -NORM_MAX");
 
 flt_nextbelow($ninf);
-cmp_ok( (is_flt_inf($ninf)), '==', -1, "next below -3.39e38 is -inf");
+cmp_ok( (is_flt_inf($ninf)), '==', -1, "next below -NORM_MAX is -inf");
 
 my $nmin = -$pmin;
 
 flt_nextabove($nmin);
-cmp_ok($nmin, '==', 0, "next above -min is zero");
-#cmp_ok( (is_flt_zero($nmin)), '==', -1, "next above -min is -0"); # may fail
+cmp_ok($nmin, '==', 0, "next above -DENORM_MIN is zero");
+#cmp_ok( (is_flt_zero($nmin)), '==', -1, "next above -DENORM_MIN is -0"); # may fail
 
 flt_nextbelow($nmin);
 cmp_ok($nmin, '==', -$Math::Float32::flt_DENORM_MIN, "next below zero is -DENORM_MIN");
@@ -62,7 +62,7 @@ my $max_subnormal = $Math::Float32::flt_DENORM_MAX;
 cmp_ok($max_subnormal, '==', '1.175494211e-38', "DENORM_MAX is 1.175494211e-38");
 
 flt_nextabove($max_subnormal);
-cmp_ok($max_subnormal, '==', $Math::Float32::flt_NORM_MIN, "next above max subnormal is NORM_MIN");
+cmp_ok($max_subnormal, '==', $Math::Float32::flt_NORM_MIN, "next above DENORM_MAX is NORM_MIN");
 
 flt_nextbelow($max_subnormal);
 cmp_ok($max_subnormal, '==', $Math::Float32::flt_DENORM_MAX, "next below NORM_MIN is DENORM_MAX");
@@ -73,39 +73,5 @@ cmp_ok($neg_normal_min, '==', -$Math::Float32::flt_DENORM_MAX, "next above -NORM
 
 my $min        = Math::Float32->new("$Math::Float32::flt_DENORM_MIN");
 my $cumulative = Math::Float32->new("$Math::Float32::flt_DENORM_MIN");
-
-#my @p = ($cumulative);
-#my $n = 2 ** (flt_MANTBITS - 1);
-#$n--;
-#for(1..$n) {
-#   $cumulative += $min;
-#   push (@p, $cumulative);
-#}
-#
-#my $check = Math::Float32->new(0);
-#
-#for(0..$n) {
-#  flt_nextabove($check);
-#  cmp_ok($check, '==', $p[$_], "$_: as expected ($p[$_])");
-#}
-#
-#flt_nextbelow($check);
-#cmp_ok($check, '==', $Math::Float32::flt_DENORM_MAX, "DENORM_MAX as expected");
-#
-#flt_nextbelow($check);
-#cmp_ok($check, '==', $Math::Float32::flt_DENORM_MAX - $Math::Float32::flt_DENORM_MIN, "DENORM_MAX - DENORM_MIN as expected");
-#
-#flt_set_zero($check, 1);
-#
-#for(0..$n) {
-#  flt_nextbelow($check);
-#  cmp_ok($check, '==', -$p[$_], "$_: as expected (-$p[$_])");
-#}
-#
-#flt_nextabove($check);
-#cmp_ok($check, '==', -$Math::Float32::flt_DENORM_MAX, "-DENORM_MAX as expected");
-#
-#flt_nextabove($check);
-#cmp_ok($check, '==', -$Math::Float32::flt_DENORM_MAX + $Math::Float32::flt_DENORM_MIN, "-DENORM_MAX + DENORM_MIN as expected");
 
 done_testing();
