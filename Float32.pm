@@ -252,6 +252,12 @@ sub flt_nextbelow {
   }
 }
 
+sub unpack_flt_hex {
+  my @ret = _unpack_flt_hex($_[0]);
+  return join('', @ret);
+}
+
+
 sub _get_norm_max {
   my $ret = 0;
   for my $p(1 .. flt_MANTBITS) { $ret += 2 ** (flt_EMAX - $p) }
