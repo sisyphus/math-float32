@@ -13,7 +13,7 @@ if($@) {
   warn "\n Aborting this test script:\n",
        " This test script needs Math-MPFR-4.44 but Math-MPFR failed to load.\n",
        " Installing Math-MPFR-4.44 or later should enable the running of this script.\n",
-       " If Math-MPFR-4.44 is not yet on CPAN, install the devel version from the github repo\n at https://github.com/sisyphus/math-float32\n";
+       " If Math-MPFR-4.44 is not yet on CPAN, install the devel version from the github repo\n at https://github.com/sisyphus/math-mpfr\n";
        is(1, 1);
        done_testing();
        exit 0;
@@ -22,7 +22,7 @@ if($@) {
 if($Math::MPFR::VERSION < 4.44) {
   warn "\n Aborting this test script:\n",
        " This test script needs Math-MPFR-4.44 but we have only version $Math::MPFR::VERSION\n",
-       " If Math-MPFR-4.44 is not yet on CPAN, install the devel version from the github repo\n at https://github.com/sisyphus/math-float32\n";
+       " If Math-MPFR-4.44 is not yet on CPAN, install the devel version from the github repo\n at https://github.com/sisyphus/math-mpfr\n";
        is(1, 1);
        done_testing();
        exit 0;
