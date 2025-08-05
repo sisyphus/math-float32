@@ -34,17 +34,23 @@
  Maximum finite value is 3.40282347e+38.
  Minimum positive non-zero value is 1.40129846e-45.
 
+ In the below documentation, "$obj" refers to a Math::Float32 object,
+ "$iv" refers to an IV, "$nv" refers to an NV, and "$str" refers to a
+ string (PV), "$val" refers to a value in the form of one of the
+ preceding types.
+
 =head1 ASSIGNMENT FUNCTIONS
 
-    $obj ->new($[val]);
+    $obj = Math::Float32->new([$val]);
     $obj = new([$val]);
      Set $obj to a Math::Float32 object with value $val.
      If $val is not provided, the $obj has the value NaN.
-     $val cab be an IV (integer), an NV (perl float), or a PV.
+     $val cab be an IV (integer), an NV (perl float), a PV or a
+     Math::Float32 object.
 
      See the SYNOPSIS section (above) for some elaboration,
      If necessay, $val will be rounded (to nearest, ties to even)
-     to fit into the float type.
+     to fit into the single precision float type.
 
     flt_set($obj, $val);
      Set the value of $obj to the value specified by $val (rounded
@@ -87,7 +93,7 @@
 
 =head1 OUTPUT FUNCTIONS
 
-    $string = "$obj";
+    $str = "$obj";
      Set $str to the value of $obj in decimal scientific
      notation (eg 1.234e-2). If this string is passed as
      the argument to Math::Float32->new(), then the
@@ -102,7 +108,7 @@
      Either form will display the string returned by the
      interpolating of $obj.
 
-   $string = unpack_flt_hex($obj);
+   $str = unpack_flt_hex($obj);
     Unpack the  float encoding of the value held by $obj as a string
     of hex characters.
     For example, unpack 0, denorm min and +Inf:
