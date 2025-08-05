@@ -164,16 +164,28 @@ cmp_ok($root, '==', '1.41421354', "sqrt(2) == '1.41421354'");
 cmp_ok($root, '==', Math::Float32->new(2) ** 0.5, "sqrt(2) == 2 ** 0.5");
 cmp_ok($root, '==', 2 ** Math::Float32->new(0.5), "sqrt(2) == 2 ** 0.5");
 
+cmp_ok(flt_signbit($root), '==', 0, "signbit of $root is unset");
+cmp_ok(flt_signbit(-$root), '==', 1, "signbit of -$root is set");
+
 my $log = log(Math::Float32->new(10));
 cmp_ok($log, '==', Math::Float32->new('2.30258512'), "log(10) == 2.30258512");
 cmp_ok($log, '==', '2.30258512', "log(10) == '2.30258512'");
+
+cmp_ok(flt_signbit($log), '==', 0, "signbit of $log is unset");
+cmp_ok(flt_signbit($log * -1), '==', 1, "signbit of -$log is set");
 
 my $exp = exp(Math::Float32->new('2.30258512'));
 cmp_ok($exp, '==', Math::Float32->new('10'), "exp('2.30258512') == 10");
 cmp_ok($exp, '==', '10', "exp('2.30258512') == '10'");
 
+cmp_ok(flt_signbit($exp), '==', 0, "signbit of $exp is unset");
+cmp_ok(flt_signbit($exp - 15), '==', 1, "signbit of $exp - 15 is set");
+
 my $int = int(Math::Float32->new(21.9));
 cmp_ok($int, '==', 21, "int(21.9) == 21");
+
+cmp_ok(flt_signbit($int), '==', 0, "signbit of $int is unset");
+cmp_ok(flt_signbit($int / -3), '==', 1, "signbit of $int / -3 is set");
 
 ################
 # overload abs #

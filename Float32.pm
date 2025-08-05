@@ -223,7 +223,7 @@ sub is_flt_zero {
 }
 
 sub flt_signbit {
-  return 1 if substr(unpack_flt_hex($_[0]), 0, 1) >= 8;
+  return 1 if hex(substr(unpack_flt_hex($_[0]), 0, 1)) >= 8;
   return 0;
 }
 
