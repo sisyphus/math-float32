@@ -30,6 +30,8 @@ Math::MPFR::Rmpfr_set_default_prec(flt_MANTBITS);
 
 my $flt_rop = Math::Float32->new();
 my $mpfr_rop = Math::MPFR->new();
+my $mpfr1 = Math::MPFR->new();
+my $mpfr2 = Math::MPFR->new();
 
 my @p = (  (2 ** (flt_EMIN -1)),
            (2 ** flt_EMIN) + (2 ** (flt_EMIN + 2)),
@@ -49,6 +51,21 @@ for my $v(@p) {
   RESET_EMIN_EMAX();
   Math::MPFR::Rmpfr_get_FLT($flt_rop, $mpfr_rop, 0);
   cmp_ok($flt_rop, '==', sqrt($flt_1), "sqrt($v): Math::MPFR & Math::Float32 concur");
+}
+
+for my $v1(@p) {
+  my $flt_1 = Math::Float32->new($v1);
+  Math::MPFR::Rmpfr_set_FLT($mpfr1, $flt_1, 0);
+  for my $v2(@p) {
+    my $flt_2 = Math::Float32->new($v2);
+    Math::MPFR::Rmpfr_set_FLT($mpfr2, $flt_2, 0);
+    SET_EMIN_EMAX();
+    my $inex = Math::MPFR::Rmpfr_fmod($mpfr_rop, $mpfr1, $mpfr2, 0);
+    Math::MPFR::Rmpfr_subnormalize($mpfr_rop, $inex, 0);
+    RESET_EMIN_EMAX();
+    Math::MPFR::Rmpfr_get_FLT($flt_rop, $mpfr_rop, 0);
+    cmp_ok($flt_rop, '==', $flt_1 % $flt_2, "fmod($v1, $v2): Math::MPFR & Math::Float32 concur");
+  }
 }
 
 for my $v(@p) {
