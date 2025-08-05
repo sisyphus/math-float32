@@ -70,8 +70,9 @@
  precision value (rounded to nearest, ties to even).
 
  All arithmetic is done via the overloading of the
- '+', '-', '*', '/', '**'/, '+=', '-=', '*=', '/=', and '**='
- operators.
+ '+', '-', '*', '/', '%', '**'/, '+=', '-=', '*=', '/=', '%=',
+ and '**=' operators.
+ The '%' and '%=' overloading calls the fmod function.
 
  The 'log', 'exp', 'sqrt', 'abs' and 'int' functions are also
  overloaded.

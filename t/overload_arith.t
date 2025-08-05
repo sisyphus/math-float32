@@ -141,6 +141,25 @@ for (my $i = 0; $i < $index; $i++) {
   }
 }
 
+my $fmod1 = Math::Float32->new('2.6');
+my $fmod2 = Math::Float32->new('1.2');
+
+cmp_ok($fmod1 % $fmod2, '==', '1.99999809e-1', "2.6 % 1.2 == 1.99999809e-1");
+cmp_ok(-$fmod1 % $fmod2, '==', '-1.99999809e-1', "-2.6 % 1.2 == -1.99999809e-1");
+cmp_ok($fmod1 % -$fmod2, '==', '1.99999809e-1', "2.6 % -1.2 == 1.99999809e-1");
+cmp_ok(-$fmod1 % -$fmod2, '==', '-1.99999809e-1', "-2.6 % -1.2 == -1.99999809e-1");
+
+cmp_ok($fmod2 % $fmod1, '==', '1.20000005', "1.2 % 1.6 == 1.20000005");
+cmp_ok(-$fmod2 % $fmod1, '==', '-1.20000005', "-1.2 % 1.6 == -1.20000005");
+cmp_ok($fmod2 % -$fmod1, '==', '1.20000005', "1.2 % -1.6 == 1.20000005");
+cmp_ok(-$fmod2 % -$fmod1, '==', '-1.20000005', "-1.2 % -1.6 == -1.20000005");
+
+$fmod2 %= $fmod1;
+cmp_ok($fmod2, '==', '1.20000005', "value doesn't change under %= operation");
+
+$fmod1 %= $fmod2;
+cmp_ok($fmod1, '==', '1.99999809e-1', "value changes to 1.99999809e-1 under %= operation");
+
 $count = 0;
 for (my $i = 0; $i < $index; $i++) {
   for (my $j = 0; $j < $index; $j++) {

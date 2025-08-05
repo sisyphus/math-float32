@@ -207,6 +207,24 @@ SV * _oload_div(pTHX_  float * a,  float * b, SV * third) {
   return obj_ref;
 }
 
+SV * _oload_fmod(pTHX_  float * a,  float * b, SV * third) {
+
+   float * f_obj;
+  SV * obj_ref, * obj;
+
+  Newx(f_obj, 1,  float);
+  if(f_obj == NULL) croak("Failed to allocate memory in _oload_fmod function");
+  obj_ref = newSV(0);
+  obj = newSVrv(obj_ref, "Math::Float32");
+
+  if(SvTRUE_nomg_NN(third)) *f_obj = fmodf(*b, *a);
+  else *f_obj = fmodf(*a, *b);
+
+  sv_setiv(obj, INT2PTR(IV,f_obj));
+  SvREADONLY_on(obj);
+  return obj_ref;
+}
+
 SV * _oload_pow(pTHX_  float * a,  float * b, SV * third) {
 
   float * f_obj;
@@ -562,6 +580,15 @@ _oload_div (a, b, third)
 	SV *	third
 CODE:
   RETVAL = _oload_div (aTHX_ a, b, third);
+OUTPUT:  RETVAL
+
+SV *
+_oload_fmod (a, b, third)
+	float *	a
+	float *	b
+	SV *	third
+CODE:
+  RETVAL = _oload_fmod (aTHX_ a, b, third);
 OUTPUT:  RETVAL
 
 SV *
