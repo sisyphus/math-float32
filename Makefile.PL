@@ -14,7 +14,7 @@ if($@) {
 my %options = (
   NAME         => 'Math::Float32',
   AUTHOR       => 'Sisyphus (sisyphus at (@) cpan dot (.) org)',
-  ABSTRACT     => "Perl interface to C's  float ('brain float') arithmetic",
+  ABSTRACT     => "Perl interface to C's single precision float arithmetic",
   LICENSE      => 'perl',
   VERSION_FROM => 'Float32.pm',
   clean        => { FILES => '*.exe *.txt' },
