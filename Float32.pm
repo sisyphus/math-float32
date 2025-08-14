@@ -66,10 +66,10 @@ my @tagged = qw( flt_to_NV flt_to_MPFR
                22 => sub {return _fromFloat32(shift)},
                );
 
-$Math::Float32::flt_DENORM_MIN = Math::Float32->new(2) ** (flt_EMIN - 1);                  # 1.401298464e-45
-$Math::Float32::flt_DENORM_MAX = Math::Float32->new(_get_denorm_max());                    # 1.175494211e-38
-$Math::Float32::flt_NORM_MIN   = Math::Float32->new(2) ** (flt_EMIN + (flt_MANTBITS - 2)); # 1.175494351e-38
-$Math::Float32::flt_NORM_MAX   = Math::Float32->new(_get_norm_max());                      # 3.402823466e+38
+$Math::Float32::flt_DENORM_MIN = Math::Float32->new(2) ** (flt_EMIN - 1);                  # 1.40129846e-45
+$Math::Float32::flt_DENORM_MAX = Math::Float32->new(_get_denorm_max());                    # 1.17549421e-38
+$Math::Float32::flt_NORM_MIN   = Math::Float32->new(2) ** (flt_EMIN + (flt_MANTBITS - 2)); # 1.17549435e-38
+$Math::Float32::flt_NORM_MAX   = Math::Float32->new(_get_norm_max());                      # 3.402823467e+38
 
 sub new {
    shift if (@_ > 0 && !ref($_[0]) && _itsa($_[0]) == 4 && $_[0] eq "Math::Float32");
