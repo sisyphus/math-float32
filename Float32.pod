@@ -42,7 +42,7 @@
 =head1 ASSIGNMENT FUNCTIONS
 
     $obj = Math::Float32->new([$val]);
-    $obj = new([$val]);
+    $obj = Math::Float::new([$val]);
      Set $obj to a Math::Float32 object with value $val.
      If $val is not provided, the $obj has the value NaN.
      $val cab be an IV (integer), an NV (perl float), a PV or a
