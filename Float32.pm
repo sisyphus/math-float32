@@ -49,7 +49,7 @@ my @tagged = qw( flt_to_NV flt_to_MPFR
                  flt_signbit
                  flt_set
                  flt_nextabove flt_nextbelow
-                 unpack_flt_hex
+                 unpack_flt_hex pack_flt_hex
                  flt_EMIN flt_EMAX flt_MANTBITS
                );
 
@@ -268,6 +268,29 @@ sub unpack_flt_hex {
   return join('', @ret);
 }
 
+sub pack_flt_hex {
+  my $arg = shift;
+  my $is_neg = '';
+  die "Invalid argument ($arg) given to pack_flt_hex"
+    if(length($arg) != 8 || $arg =~ /[^0-9a-fA-F]/);
+
+  my $binstr = unpack 'B32', pack 'H8', $arg;
+  $is_neg = '-' if substr($binstr, 0, 1) eq '1';
+  my $power = oct('0b' .substr($binstr,1, 8)) - 127;
+  my $prefix = '1';
+  if($power < -126) { # Subnormal
+    $power = -126;
+    $prefix = '0';
+  }
+
+  # Unfortunately, C's strtof function (which is used by
+  # Math::Float32::new() does not accommodate binary strings,
+  # so we have to convert the binary string to its hex
+  # equivalent before passing it to new().
+  $power -= 23;
+  my $hexstring = '0x' . lc(unpack 'H6', pack('B24', $prefix . substr($binstr,9, 23)));
+  return Math::Float32->new($is_neg . $hexstring . "p$power");
+}
 
 sub _get_norm_max {
   my $ret = 0;

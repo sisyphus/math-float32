@@ -117,6 +117,11 @@
       print unpack_flt_hex(Math::Float32->new(2) ** -149); # 00000001
       print unpack_flt_hex(Math::Float32->new(2) ** 128);  # 7F800000
 
+   $obj = pack_flt_hex($string);
+    Convert the string ($string) returned by unpack_flt_hex()
+    into a Math::Float32 object whose value is the same as the
+    object from which $string was derived.
+
 =head1 MISCELLANEOUS FUNCTIONS
 
     $iv = is_flt_nan($obj);
