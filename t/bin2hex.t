@@ -3,6 +3,12 @@ use warnings;
 
 use Math::Float32 qw(:all);
 
+my $have_mpfr = 0;
+eval { require Math::MPFR;};
+$have_mpfr = 1 unless $@;
+
+Math::MPFR::Rmpfr_set_default_prec(24) if $have_mpfr;
+
 use Test::More;
 
 for my $bin ( '0b11101101', '-0B11101101',
@@ -32,6 +38,10 @@ for my $bin ( '0b11101101', '-0B11101101',
             ) {
   like($bin, qr/^[\-\+]?0[bB]/, "$bin is a basic match");
   cmp_ok( Math::Float32->new(Math::Float32::bin2hex($bin)), '==', Math::Float32->new($bin), "$bin: ok");
+
+  if($have_mpfr) {
+    cmp_ok( Math::MPFR->new(Math::Float32::bin2hex($bin)), '==', Math::MPFR->new($bin), "MPFR ($bin): ok");
+  }
 }
 
 my $s = '-0b11.01';
