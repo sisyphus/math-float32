@@ -5,6 +5,7 @@ Float32.pm
 Float32.pod
 Float32.xs
 t/basic.t
+t/bin2hex.t
 t/inf.t
 t/mpfr_checks.t
 t/new.t
