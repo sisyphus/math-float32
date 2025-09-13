@@ -99,7 +99,14 @@ cmp_ok(Math::Float32->new('0b1.1'), '==', '1.5', "'0b1.1' assessed correctly");
 cmp_ok(Math::Float32->new('0b11p-1'), '==', '1.5', "'0b11p-1' assessed correctly");
 cmp_ok(Math::Float32->new('-0b1.00001p+3'), '==', '-8.25', "'0b1.00001p+3' assessed correctly");
 cmp_ok(Math::Float32->new('-0b100.001E+1'), '==', '-8.25', "'0b100.001E+1' assessed correctly");
-
-
+cmp_ok(Math::Float32->new('-0b.001'), '==', '-0.125', "'0b.001' assessed correctly");
+cmp_ok(Math::Float32->new('-0b.001E-1'), '==', '-0.0625', "'0b.001E-1' assessed correctly");
+cmp_ok(Math::Float32->new('-0b.001p+1'), '==', '-0.25', "'0b.001p+1' assessed correctly");
+my $whitespace = " \t \n  \n ";
+cmp_ok(Math::Float32->new("${whitespace}-0b.001p+1"), '==', '-0.25', "'<whitespace>-0b.001p+1' assessed correctly");
+cmp_ok(sprintf("%s", Math::Float32->new('0b.')), 'eq', '0', "''0b.' assessed correctly");
+cmp_ok(sprintf("%s", Math::Float32->new('-0b.')), 'eq', '-0', "''-0b.' assessed correctly");
+cmp_ok(sprintf("%s", Math::Float32->new('0b')), 'eq', '0', "''0b.' assessed correctly");
+cmp_ok(sprintf("%s", Math::Float32->new('-0b')), 'eq', '-0', "''-0b.' assessed correctly");
 
 done_testing();

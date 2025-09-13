@@ -79,7 +79,7 @@ sub new {
    if($itsa) {
      my $coderef = $Math::Float32::handler{$itsa};
      return $coderef->(bin2hex($_[0]))
-       if($itsa == 4 && $_[0] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[0] =~ /^(\s+)?[\-\+]?0b/i);
      return $coderef->($_[0]);
    }
    die "Unrecognized 1st argument passed to new() function";
@@ -101,7 +101,7 @@ sub oload_add {
    if($itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_add($_[0], $coderef->(bin2hex($_[1])), 0)
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_add($_[0], $coderef->($_[1]), 0);
    }
    die "Unrecognized 2nd argument passed to oload_add() function";
@@ -113,7 +113,7 @@ sub oload_mul {
    if($itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_mul($_[0], $coderef->(bin2hex($_[1])), 0)
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_mul($_[0], $coderef->($_[1]), 0);
    }
    die "Unrecognized 2nd argument passed to oload_mul() function";
@@ -125,7 +125,7 @@ sub oload_sub {
    if($itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_sub($_[0], $coderef->(bin2hex($_[1])), $_[2])
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_sub($_[0], $coderef->($_[1]), $_[2]);
    }
    die "Unrecognized 2nd argument passed to oload_sub() function";
@@ -137,7 +137,7 @@ sub oload_div {
    if($itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_div($_[0], $coderef->(bin2hex($_[1])), $_[2])
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_div($_[0], $coderef->($_[1]), $_[2]);
    }
    die "Unrecognized 2nd argument passed to oload_div() function";
@@ -149,7 +149,7 @@ sub oload_fmod {
    if($itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_fmod($_[0], $coderef->(bin2hex($_[1])), $_[2])
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_fmod($_[0], $coderef->($_[1]), $_[2]);
    }
    die "Unrecognized 2nd argument passed to oload_fmod() function";
@@ -161,7 +161,7 @@ sub oload_pow {
    if($itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_pow($_[0], $coderef->(bin2hex($_[1])), $_[2])
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_pow($_[0], $coderef->($_[1]), $_[2]);
    }
    die "Unrecognized 2nd argument passed to oload_pow() function";
@@ -177,7 +177,7 @@ sub oload_equiv {
    if($itsa == 22 || $itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_equiv($_[0], $coderef->(bin2hex($_[1])), 0)
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_equiv($_[0], $coderef->($_[1]), 0);
    }
    die "Unrecognized 2nd argument passed to oload_equiv() function";
@@ -188,7 +188,7 @@ sub oload_not_equiv {
    if($itsa == 22 || $itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_not_equiv($_[0], $coderef->(bin2hex($_[1])), 0)
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_not_equiv($_[0], $coderef->($_[1]), 0);
    }
    die "Unrecognized 2nd argument passed to oload_not_equiv() function";
@@ -199,7 +199,7 @@ sub oload_gt {
    if($itsa == 22 || $itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_gt($_[0], $coderef->(bin2hex($_[1])), $_[2])
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_gt($_[0], $coderef->($_[1]), $_[2]);
    }
    die "Unrecognized 2nd argument passed to oload_gt() function";
@@ -210,7 +210,7 @@ sub oload_gte {
    if($itsa == 22 || $itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_gte($_[0], $coderef->(bin2hex($_[1])), $_[2])
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_gte($_[0], $coderef->($_[1]), $_[2]);
    }
    die "Unrecognized 2nd argument passed to oload_gte() function";
@@ -221,7 +221,7 @@ sub oload_lt {
    if($itsa == 22 || $itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_lt($_[0], $coderef->(bin2hex($_[1])), $_[2])
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_lt($_[0], $coderef->($_[1]), $_[2]);
    }
    die "Unrecognized 2nd argument passed to oload_lt() function";
@@ -232,7 +232,7 @@ sub oload_lte {
    if($itsa == 22 || $itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_lte($_[0], $coderef->(bin2hex($_[1])), $_[2])
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_lte($_[0], $coderef->($_[1]), $_[2]);
    }
    die "Unrecognized 2nd argument passed to oload_lte() function";
@@ -243,7 +243,7 @@ sub oload_spaceship {
    if($itsa == 22 || $itsa < 5) {
      my $coderef = $Math::Float32::handler{$itsa};
      return _oload_spaceship($_[0], $coderef->(bin2hex($_[1])), $_[2])
-       if($itsa == 4 && $_[1] =~ /^[\-\+]?0b/i);
+       if($itsa == 4 && $_[1] =~ /^(\s+)?[\-\+]?0b/i);
      return _oload_spaceship($_[0], $coderef->($_[1]), $_[2]);
    }
    die "Unrecognized 2nd argument passed to oload_spaceship() function";
@@ -321,61 +321,58 @@ sub pack_flt_hex {
 }
 
 sub bin2hex {
-  my $arg = shift; # We have established that $arg =~ /^[\-\+]?0b/i
+  my $arg = shift; # It is assumed that $arg =~ /^(\s+)?[\-\+]?0b/i
+  $arg =~ s/^\s+//;
   die "Illegal character(s) in arg ($arg) passed to bin2hex"
     if $arg =~ /[^0-9peb\.\-\+]/i;
-  my($is_neg, $no_radix_point) = ('', 0);
+  my($is_neg, $point_index) = ('');
   $is_neg = '-' if $arg =~ /^\-/;
 
-  $arg = (split /0b/i, $arg)[1];
+  $arg =~ s/^[\-\+]?0b//i;
 
+  # Remove all leading zeroes, but retain a leading
+  # '0' if (and only if) it is succeeded by a '.'.
   substr($arg, 0, 1, '') while $arg =~ /^0[^\.]/;
 
   $arg =~ s/e/p/i;
   my @args = split /p/i, $arg;
 
-  # Remove trailing zeroes from beyond the
-  # radix point and remove a trailing '.' (if present)
-  $args[0] =~ s/0+$// if $args[0] =~ /\./;
-  $args[0] =~ s/\.$//;
+  { # Start no warnings 'uninitialized'
 
-  $args[1] //= 0;
-  my $point_index = index($args[0], '.');
-  $no_radix_point = 1 if $point_index == -1;
-  if ($args[0] =~ s/^0\.//) {
-    $args[1]--;
-    while($args[0] =~ /^0/) {
-       substr($args[0], 0, 1, '');
-       $args[1]--;
+    no warnings 'uninitialized'; # $args[0] might be uninitialized
+    # Remove trailing zeroes from beyond the
+    # radix point and remove a trailing '.' (if present)
+    $args[0] =~ s/0+$// if $args[0] =~ /\./;
+    $args[0] =~ s/\.$//;
+
+    $args[1] //= 0;
+    $point_index = index($args[0], '.');
+    if ($args[0] =~ s/^0\.//) {
+      $args[1]--;
+      while($args[0] =~ /^0/) {
+         substr($args[0], 0, 1, '');
+         $args[1]--;
+      }
     }
-    return '0xp0' if $args[0] !~ /1/;
-  }
+    return $is_neg . '0xp0' if $args[0] !~ /1/;
+
+  } # End no warnings 'uninitialized'
+
   $args[0] =~ s/\.//;
   while (length($args[0]) % 4) {
     $args[0] .= '0' ;
-    $args[1]-- if $no_radix_point;
+    $args[1]-- if $point_index < 0; # The string did not contain a radix point
   }
   my $B_quantity = length($args[0]);
   my $H_quantity = $B_quantity / 4;
+
+  # It may well be that the case (ie "lower" or "upper") makes no difference.
+  # Out of caution, I'll specify lower case and use the (matching) '0x' prefix.
   my $mantissa = lc(unpack "H$H_quantity", pack "B$B_quantity", $args[0]);
 
-  if(!$args[1]) {
-
-    #print "### A ####\n";
-    return $is_neg . '0x' . $mantissa unless $point_index >= 0;
-
-    #print "### B ###\n";
-    my $exponent = $point_index - $B_quantity; # $exponent is <= 0
-    return $is_neg . '0x' . $mantissa . "p$exponent";
-  }
-
-  #print "### C ###\n";
-  return $is_neg . '0x' . $mantissa . "p$args[1]" unless $point_index >= 0;
-
-  #print "### D ###\n";
+  return $is_neg . '0x' . $mantissa . "p$args[1]" if $point_index < 0;
   my $exponent = $point_index - $B_quantity + $args[1];
-    return $is_neg . '0x' . $mantissa . "p$exponent";
-
+  return $is_neg . '0x' . $mantissa . "p$exponent";
 }
 
 sub _get_norm_max {
