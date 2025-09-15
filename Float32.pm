@@ -71,6 +71,12 @@ $Math::Float32::flt_DENORM_MAX = Math::Float32->new(_get_denorm_max());         
 $Math::Float32::flt_NORM_MIN   = Math::Float32->new(2) ** (flt_EMIN + (flt_MANTBITS - 2)); # 1.17549435e-38
 $Math::Float32::flt_NORM_MAX   = Math::Float32->new(_get_norm_max());                      # 3.402823467e+38
 
+
+# Skip signed zero tests in the test suite if C's strtof()
+# does not handle '-0' correctly.
+my $signed_zero_tester = Math::Float32->new('-0.0');
+$Math::Float32::broken_signed_zero = "$signed_zero_tester" =~ /^\-/ ? 0 : 1;
+
 sub new {
    shift if (@_ > 0 && !ref($_[0]) && _itsa($_[0]) == 4 && $_[0] eq "Math::Float32");
    if(!@_) { return _fromPV('NaN');}
@@ -354,7 +360,7 @@ sub bin2hex {
          $args[1]--;
       }
     }
-    return $is_neg . '0xp0' if $args[0] !~ /1/;
+    return $is_neg . '0x0p0' if $args[0] !~ /1/;
 
   } # End no warnings 'uninitialized'
 

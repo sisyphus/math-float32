@@ -11,6 +11,11 @@ Math::MPFR::Rmpfr_set_default_prec(24) if $have_mpfr;
 
 use Test::More;
 
+if($Math::Float32::broken_signed_zero) {
+  warn "\n 3 signed zero tests will be skipped because",
+       "\n this system does not support negative zero\n";
+}
+
 for my $bin ( '0b11101101', '-0B11101101',
               '0b0011101101', '-0B0011101101',
               '0b00011101101', '-0B00011101101',
@@ -105,10 +110,24 @@ cmp_ok(Math::Float32->new('-0b.001p+1'), '==', '-0.25', "'0b.001p+1' assessed co
 my $whitespace = " \t \n  \n ";
 cmp_ok(Math::Float32->new("${whitespace}-0b.001p+1"), '==', '-0.25', "'<whitespace>-0b.001p+1' assessed correctly");
 cmp_ok(sprintf("%s", Math::Float32->new('0b.')), 'eq', '0', "'0b.' assessed correctly");
-cmp_ok(sprintf("%s", Math::Float32->new('-0b.')), 'eq', '-0', "'-0b.' assessed correctly");
+
+unless($Math::Float32::broken_signed_zero) {
+  cmp_ok(sprintf("%s", Math::Float32->new('-0b.')), 'eq', '-0', "'-0b.' assessed correctly");
+}
+else { warn "Skipping signed zero test " }
+
 cmp_ok(sprintf("%s", Math::Float32->new('0b')), 'eq', '0', "'0b' assessed correctly");
-cmp_ok(sprintf("%s", Math::Float32->new('-0b')), 'eq', '-0', "'-0b' assessed correctly");
+
+unless($Math::Float32::broken_signed_zero) {
+  cmp_ok(sprintf("%s", Math::Float32->new('-0b')), 'eq', '-0', "'-0b' assessed correctly");
+}
+else { warn "Skipping signed zero test " }
+
 cmp_ok(sprintf("%s", Math::Float32->new('0b0.0')), 'eq', '0', "'0b0.0' assessed correctly");
-cmp_ok(sprintf("%s", Math::Float32->new('-0b0.0')), 'eq', '-0', "'-0b0.0' assessed correctly");
+
+unless($Math::Float32::broken_signed_zero) {
+  cmp_ok(sprintf("%s", Math::Float32->new('-0b0.0')), 'eq', '-0', "'-0b0.0' assessed correctly");
+}
+else { warn "Skipping signed zero test " }
 
 done_testing();
