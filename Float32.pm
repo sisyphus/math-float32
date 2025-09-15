@@ -359,10 +359,14 @@ sub bin2hex {
   } # End no warnings 'uninitialized'
 
   $args[0] =~ s/\.//;
-  while (length($args[0]) % 4) {
-    $args[0] .= '0' ;
-    $args[1]-- if $point_index < 0; # The string did not contain a radix point
+
+  my $pad = length($args[0]) % 4;
+  if($pad) {
+    $pad = 4 - $pad;
+    $args[0] .= '0' x $pad;
+    $args[1] -= $pad if $point_index < 0; # The string did not contain a radix point
   }
+
   my $B_quantity = length($args[0]);
   my $H_quantity = $B_quantity / 4;
 
