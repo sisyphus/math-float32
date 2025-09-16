@@ -37,7 +37,7 @@ require Exporter;
 *import = \&Exporter::import;
 require DynaLoader;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 Math::Float32->DynaLoader::bootstrap($VERSION);
 
 sub dl_load_flags {0} # Prevent DynaLoader from complaining and croaking
