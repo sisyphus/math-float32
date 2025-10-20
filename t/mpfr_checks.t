@@ -133,9 +133,7 @@ for my $p(@powers) {
     Math::MPFR::Rmpfr_subnormalize($mpfr_rop, $inex, 0);
     RESET_EMIN_EMAX();
     Math::MPFR::Rmpfr_get_FLT($flt_rop, $mpfr_rop, 0);
-
-
-    if(!$bsd || $flt_rop == log($flt_1)) {
+    if(!$bsd || $flt_rop == $flt_1 ** "$pow") {
       cmp_ok($flt_rop, '==', $flt_1 ** "$pow", "$v ** '$pow': Math::MPFR & Math::Float32 concur");
     }
     else { # Allow log($flt_1) to be 1ULP below the correct value.
