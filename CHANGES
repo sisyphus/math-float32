@@ -2,6 +2,9 @@ Revision history for Perl module Math::Float32
 
 0.03
   - Correction to "repository" location in Makefile.PL.
+  - In t/mpfr_checks.t we make allowance for *BSD sloppiness re the
+    calculations of log(), exp() and '**' operations, whhich can be
+    1ULP closer to zero than they ought to be.
 
 0.02
   -  More tests added.

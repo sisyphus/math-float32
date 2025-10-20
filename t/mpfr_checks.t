@@ -28,12 +28,16 @@ if($Math::MPFR::VERSION < 4.44) {
        exit 0;
 }
 
+my $bsd = 0;
+$bsd = 1 if $^O =~ /bsd/i; # Attempt to make allowance for *BSD sloppiness.
+
 my $emin_orig = Math::MPFR::Rmpfr_get_emin();
 my $emax_orig  = Math::MPFR::Rmpfr_get_emax();
 Math::MPFR::Rmpfr_set_default_prec(flt_MANTBITS);
 
 my $flt_rop = Math::Float32->new();
 my $mpfr_rop = Math::MPFR->new();
+my $mpfr_toward = Math::MPFR->new(0);
 my $mpfr1 = Math::MPFR->new();
 my $mpfr2 = Math::MPFR->new();
 
@@ -91,7 +95,13 @@ for my $v(@p) {
   Math::MPFR::Rmpfr_subnormalize($mpfr_rop, $inex, 0);
   RESET_EMIN_EMAX();
   Math::MPFR::Rmpfr_get_FLT($flt_rop, $mpfr_rop, 0);
-  cmp_ok($flt_rop, '==', log($flt_1), "log($v): Math::MPFR & Math::Float32 concur");
+  if(!$bsd || $flt_rop == log($flt_1)) {
+    cmp_ok($flt_rop, '==', log($flt_1), "log($v): Math::MPFR & Math::Float32 concur");
+  }
+  else { # Allow log($flt_1) to be 1ULP below the correct value.
+    Rmpfr_nexttoward($flt_rop, $mpfr_toward);
+    cmp_ok($flt_rop, '==', log($flt_1), "log($v): Accept that Math::MPFR & Math::Float32 differ by 1ULP");
+  }
 }
 
 for my $v(@p) {
@@ -102,7 +112,13 @@ for my $v(@p) {
   Math::MPFR::Rmpfr_subnormalize($mpfr_rop, $inex, 0);
   RESET_EMIN_EMAX();
   Math::MPFR::Rmpfr_get_FLT($flt_rop, $mpfr_rop, 0);
-  cmp_ok($flt_rop, '==', exp($flt_1), "exp($v): Math::MPFR & Math::Float32 concur");
+  if(!$bsd || $flt_rop == exp($flt_1)) {
+    cmp_ok($flt_rop, '==', exp($flt_1), "exp($v): Math::MPFR & Math::Float32 concur");
+  }
+  else { # Allow log($flt_1) to be 1ULP below the correct value.
+    Rmpfr_nexttoward($flt_rop, $mpfr_toward);
+    cmp_ok($flt_rop, '==', exp($flt_1), "exp($v): Accept that Math::MPFR & Math::Float32 differ by 1ULP");
+  }
 }
 
 my @powers = ('0.1', '0.2', '0.3', '0.4', '0.6', '0.7', '0.8', '0.9');
@@ -117,7 +133,15 @@ for my $p(@powers) {
     Math::MPFR::Rmpfr_subnormalize($mpfr_rop, $inex, 0);
     RESET_EMIN_EMAX();
     Math::MPFR::Rmpfr_get_FLT($flt_rop, $mpfr_rop, 0);
-    cmp_ok($flt_rop, '==', $flt_1 ** "$pow", "$v ** '$pow': Math::MPFR & Math::Float32 concur");
+
+
+    if(!$bsd || $flt_rop == log($flt_1)) {
+      cmp_ok($flt_rop, '==', $flt_1 ** "$pow", "$v ** '$pow': Math::MPFR & Math::Float32 concur");
+    }
+    else { # Allow log($flt_1) to be 1ULP below the correct value.
+      Rmpfr_nexttoward($flt_rop, $mpfr_toward);
+      cmp_ok($flt_rop, '==', $flt_1 ** "$pow", "$v ** '$pow': Accept that Math::MPFR & Math::Float32 differ by 1ULP");
+    }
   }
 }
 
