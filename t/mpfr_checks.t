@@ -99,7 +99,7 @@ for my $v(@p) {
     cmp_ok($flt_rop, '==', log($flt_1), "log($v): Math::MPFR & Math::Float32 concur");
   }
   else { # Allow log($flt_1) to be 1ULP below the correct value.
-    Rmpfr_nexttoward($flt_rop, $mpfr_toward);
+    flt_nextbelow($flt_rop);
     cmp_ok($flt_rop, '==', log($flt_1), "log($v): Accept that Math::MPFR & Math::Float32 differ by 1ULP");
   }
 }
@@ -115,8 +115,8 @@ for my $v(@p) {
   if(!$bsd || $flt_rop == exp($flt_1)) {
     cmp_ok($flt_rop, '==', exp($flt_1), "exp($v): Math::MPFR & Math::Float32 concur");
   }
-  else { # Allow log($flt_1) to be 1ULP below the correct value.
-    Rmpfr_nexttoward($flt_rop, $mpfr_toward);
+  else { # Allow exp($flt_1) to be 1ULP below the correct value.
+    flt_nextbelow($flt_rop);
     cmp_ok($flt_rop, '==', exp($flt_1), "exp($v): Accept that Math::MPFR & Math::Float32 differ by 1ULP");
   }
 }
@@ -136,8 +136,8 @@ for my $p(@powers) {
     if(!$bsd || $flt_rop == $flt_1 ** "$pow") {
       cmp_ok($flt_rop, '==', $flt_1 ** "$pow", "$v ** '$pow': Math::MPFR & Math::Float32 concur");
     }
-    else { # Allow log($flt_1) to be 1ULP below the correct value.
-      Rmpfr_nexttoward($flt_rop, $mpfr_toward);
+    else { # Allow $flt_1 ** "$pow" to be 1ULP below the correct value.
+      flt_nextbelow($flt_rop);
       cmp_ok($flt_rop, '==', $flt_1 ** "$pow", "$v ** '$pow': Accept that Math::MPFR & Math::Float32 differ by 1ULP");
     }
   }
