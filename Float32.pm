@@ -272,31 +272,6 @@ sub flt_signbit {
   return 0;
 }
 
-sub flt_nextabove {
-  if(is_flt_zero($_[0])) {
-    flt_set($_[0], $Math::Float32::flt_DENORM_MIN);
-  }
-  elsif($_[0] < $Math::Float32::flt_NORM_MIN && $_[0] >= -$Math::Float32::flt_NORM_MIN ) {
-    $_[0] += $Math::Float32::flt_DENORM_MIN;
-    flt_set_zero($_[0], -1) if is_flt_zero($_[0]);
-  }
-  else {
-    _flt_nextabove($_[0]);
-  }
-}
-
-sub flt_nextbelow {
-  if(is_flt_zero($_[0])) {
-    flt_set($_[0], -$Math::Float32::flt_DENORM_MIN);
-  }
-  elsif($_[0] <= $Math::Float32::flt_NORM_MIN && $_[0] > -$Math::Float32::flt_NORM_MIN ) {
-    $_[0] -= $Math::Float32::flt_DENORM_MIN;
-  }
-  else {
-    _flt_nextbelow($_[0]);
-  }
-}
-
 sub unpack_flt_hex {
   my @ret = _unpack_flt_hex($_[0]);
   return join('', @ret);
