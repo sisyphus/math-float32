@@ -44,7 +44,7 @@ sub dl_load_flags {0} # Prevent DynaLoader from complaining and croaking
 
 
 
-my @tagged = qw( flt_to_NV flt_to_MPFR
+my @tagged = qw( flt_to_NV
                  is_flt_nan is_flt_inf is_flt_zero flt_set_nan flt_set_inf flt_set_zero
                  flt_signbit
                  flt_set
