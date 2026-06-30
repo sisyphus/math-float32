@@ -273,7 +273,7 @@ sub oload_spaceship {
 }
 
 sub oload_interp {
-   return sprintf("%.9g", flt_to_NV($_[0]));
+   return sprintf("%.8g", flt_to_NV($_[0]));
 }
 
 sub is_flt_zero {
