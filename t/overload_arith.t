@@ -178,8 +178,8 @@ for (my $i = 0; $i < $index; $i++) {
 ################################################
 
 my $root = sqrt(Math::Float32->new(2));
-cmp_ok($root, '==', Math::Float32->new('1.41421354'), "sqrt(2) == 1.41421354");
-cmp_ok($root, '==', '1.41421354', "sqrt(2) == '1.41421354'");
+cmp_ok($root, '==', Math::Float32->new('1.4142135'), "sqrt(2) == 1.4142135");
+cmp_ok($root, '==', '1.4142135', "sqrt(2) == '1.4142135'");
 cmp_ok($root, '==', Math::Float32->new(2) ** 0.5, "sqrt(2) == 2 ** 0.5");
 cmp_ok($root, '==', 2 ** Math::Float32->new(0.5), "sqrt(2) == 2 ** 0.5");
 
@@ -258,9 +258,9 @@ my $stringified = sprintf("%s", $interp0);
 cmp_ok("$stringified", 'eq', 'NaN', "sprintf returns 'NaN'");
 
 my $interp1 = sqrt(Math::Float32->new(2));
-cmp_ok("$interp1", 'eq', '1.41421354', "interpolates to '1.41421354'");
+cmp_ok("$interp1", 'eq', '1.4142135', "interpolates to '1.4142135'");
 $stringified = sprintf("%s", $interp1);
-cmp_ok("$stringified", 'eq', '1.41421354', "sprintf returns '1.41421354'");
+cmp_ok("$stringified", 'eq', '1.4142135', "sprintf returns '1.4142135'");
 
 
 my $flt_obj = Math::Float32->new('1025.123');
